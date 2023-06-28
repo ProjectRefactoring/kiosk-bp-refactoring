@@ -112,7 +112,7 @@ const KioskReturnCameraContainer = () => {
   }, [id, seconds, miliUnit, navigate])
 
   return (
-    <div css={componentStyles}>
+    <div>
       <div css={KioskReturnCameraStyle}>
         <div css={header}>
           <KioskCameraHeader/>

@@ -14,6 +14,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useCallback } from "react";
 ///////////////////////////////// 모달 //////////////////////////////////////
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -183,7 +184,8 @@ const KioskTakeAPicture = (data) => {
   let videoRef = useRef(null);
   let photoRef = useRef(null);
 
-  const qrdata = data.data.data.qrdata;
+  // const qrdata = data.data.data.qrdata;
+  const qrdata = "BLY001001";
 
   // get access to user webcamera
   const getVideo = () => {
@@ -207,8 +209,10 @@ const KioskTakeAPicture = (data) => {
     getVideo();
   }, [videoRef, getVideo]);
 
-  // to take picture of user
-  const takePicture = () => {
+  const [isActive, setIsActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(10);
+
+  const takePicture = useCallback(() => {
     setIsActive(!isActive);
     if (isActive) {
       const width = 839.68;
@@ -225,13 +229,12 @@ const KioskTakeAPicture = (data) => {
 
       setIscapture(true);
     }
-  };
+  }, [isActive, setIsActive, videoRef, photoRef]);
 
   // save canvas Image in server
   const [loading, setLoading] = useState(false);
 
-  const saveImage = () => {
-    // 데이터 URL로 그대로 보내기
+  const saveImage = useCallback(() => {
     const canvas = document.getElementById("$canvas");
     const imgURL = canvas.toDataURL("image/png");
 
@@ -255,23 +258,20 @@ const KioskTakeAPicture = (data) => {
         }
       })
       .catch((err) => console.log(err));
-  };
+  }, [qrdata, id]);
 
   // clear out the image from the screen
-  const clearImage = () => {
+  const clearImage = useCallback(() => {
     setIscapture(false);
-    // 6초로 세팅
     setTimeLeft(10);
 
     let photo = photoRef.current;
     let ctx = photo.getContext("2d");
     ctx.clearRect(0, 0, photo.width, photo.height);
-  };
+  }, [setIscapture, setTimeLeft, photoRef]);
 
   // useInterval로 카운트다운을 하면서 애니메이션 구현하려고
   // useInterval
-  const [timeLeft, setTimeLeft] = useState(10);
-  const [isActive, setIsActive] = useState(false);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef();

@@ -1,30 +1,30 @@
 /** @jsxImportSource @emotion/react */
-import { css, keyframes } from '@emotion/react'
-import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import KioskHeader from '../components/KioskHeader'
-import KioskReturnSection from '../components/KioskReturnSection'
+import { css, keyframes } from "@emotion/react";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import KioskHeader from "../components/KioskHeader";
+import KioskReturnSection from "../components/KioskReturnSection";
 
 // 오디오
-import audioFile from '../assets/KioskReturnContainerAudio.mp3'
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import audioFile from "../assets/KioskReturnContainerAudio.mp3";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 
 const AudioPlayStyle = css`
   width: 4rem;
   height: 4rem;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  background-color: #B1B2FF;
-  
+
+  background-color: #b1b2ff;
+
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  
+
   border-radius: 50%;
-  `
+`;
 // 오디오
 
 const fadeIn = keyframes`
@@ -42,16 +42,16 @@ const componentStyles = css`
 
 const KioskReturnStyle = css`
   box-sizing: border-box;
-  width : 100vw;
-  height : 100vh;
-  background-color: #EEF1FF;
+  width: 100vw;
+  height: 100vh;
+  background-color: #eef1ff;
 
   footer {
     position: absolute;
     bottom: 10px;
     right: 10px;
   }
-`
+`;
 
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다.
@@ -64,40 +64,40 @@ const KioskReturnContainer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio, setAudio] = useState(new Audio(audioFile));
 
-  const audioPlay = () => {
+  const audioPlay = useCallback(() => {
     if (audio.volume === 0) {
-      audio.currentTime = 0
-      audio.volume = 1
+      audio.currentTime = 0;
+      audio.volume = 1;
       audio.play();
     } else {
-      audio.currentTime = 100
-      audio.volume = 0
+      audio.currentTime = 100;
+      audio.volume = 0;
     }
-  }
+  }, [audio]);
 
   useEffect(() => {
-    audio.volume = 1
+    audio.volume = 1;
     audio.play();
     return () => {
       audio.pause();
-    }
-  }, [audio.volume])
+    };
+  }, [audio]);
   // 오디오
 
   // 홈화면으로
-  const miliUnit = 1000
-  const seconds = 300 * miliUnit
+  const miliUnit = 1000;
+  const seconds = 3000 * miliUnit;
   useEffect(() => {
     let myTimer = setTimeout(() => {
-      navigate(`/kiosk/${id}`)
-    }, seconds)
+      navigate(`/kiosk/${id}`);
+    }, seconds);
     return () => {
-      clearTimeout(myTimer)
-    }
-  }, [id, seconds, navigate])
+      clearTimeout(myTimer);
+    };
+  }, [id, seconds, navigate]);
 
   return (
-    <div css={componentStyles}>
+    <div /*css={componentStyles}*/>
       <div css={KioskReturnStyle}>
         <header>
           <KioskHeader />
@@ -106,13 +106,13 @@ const KioskReturnContainer = () => {
           <KioskReturnSection />
         </section>
         {/* 오디오 */}
-        <div css={AudioPlayStyle} id='audioplay' onClick={audioPlay}>
-          <VolumeUpIcon fontSize='large' />
+        <div css={AudioPlayStyle} id="audioplay" onClick={audioPlay}>
+          <VolumeUpIcon fontSize="large" />
         </div>
         {/* 오디오 */}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default KioskReturnContainer;

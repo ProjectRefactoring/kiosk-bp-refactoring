@@ -8,10 +8,10 @@ const KioskPaymentQR = () => {
   return (
     <div>
       <QRCodeSVG
-        value={`http://127.0.0.1/bp/before/payment?kioskId=${id}`}
+        value={`http://localhost:80/bp/before/payment?kioskId=${id}`}
         size={400}
         imageSettings={{
-          src: `http://127.0.0.1/bp/before/payment?kioskId=${id}`,
+          src: `http://localhost:80/bp/before/payment?kioskId=${id}`,
           width: 10,
           height: 10,
         }}
