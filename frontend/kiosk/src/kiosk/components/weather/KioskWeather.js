@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css, keyframes } from '@emotion/react'
+import { css, keyframes } from "@emotion/react";
 import { useEffect, useState } from "react";
-import axios from 'axios'
-import { useParams } from 'react-router';
+import axios from "axios";
+import { useParams } from "react-router";
+import cloudy from "../../assets/cloudy.png";
 
 const KioskHomeWeatherStyle = css`
   margin-right: 3vw;
 
-  background-color: #B1B2FF;
+  background-color: #b1b2ff;
   border-radius: 65px;
 
   width: 25vw;
@@ -17,18 +18,18 @@ const KioskHomeWeatherStyle = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const KioskHomeWeatherImg = css`
   position: absolute;
-  top: 190px;
+  top: 150px;
   padding: 0;
-`
+`;
 
 const KioskHomeWeatherTextBox = css`
   position: absolute;
   bottom: 160px;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,8 +38,8 @@ const KioskHomeWeatherTextBox = css`
   .celsius {
     font-size: 24px;
     margin: 0;
-    
-    span{
+
+    span {
       font-size: 16px;
       font-weight: bold;
       display: inline-block;
@@ -50,28 +51,27 @@ const KioskHomeWeatherTextBox = css`
     font-size: 20px;
     margin: 0;
   }
-`
+`;
 
 const ani = keyframes`
   0%{transform:translate(0,-1px);}
   100%{transform:translate(0,5px);}
-`
+`;
 
 const weatherImg = css`
   animation: ${ani} 1s infinite alternate;
-`
+`;
 
 const KioskWeather = () => {
   const [celsius, setCelsius] = useState(0);
   const [windspeed, setWindspeed] = useState(0);
-  const [imgsrc, setImgsrc] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
     const getWeather = () => {
       // 키오스크 geo 에서 지점에 해당하는 위도 경도값 받아오기
       // let geoURL = `http://192.168.100.80:8080/api/kiosk/home/kiosk-geo?id=1`;
-      let geoURL = `https://bp.ssaverytime.kr:8080/api/kiosk/home/kiosk-geo?id=${id}`;
+      let geoURL = `http://127.0.0.1:8080/api/kiosk/home/kiosk-geo?id=${id}`;
       let weatherURL = ``;
       axios
         .get(geoURL)
@@ -80,9 +80,8 @@ const KioskWeather = () => {
         })
         .then((data) => {
           // weatherURL = `http://192.168.100.80:8080/api/weather/current-weather?lat=${data.lat}&lng=${data.lng}`;
-          weatherURL = `https://bp.ssaverytime.kr:8080/api/weather/current-weather?lat=${data.lat}&lng=${data.lng}`;
+          weatherURL = `http://127.0.0.1:8080/api/weather/current-weather?lat=${data.lat}&lng=${data.lng}`;
           axios.get(weatherURL).then((res) => {
-            setImgsrc(res.data.icon);
             setCelsius(res.data.temp);
             setWindspeed(res.data.wind_speed);
           });
@@ -96,11 +95,14 @@ const KioskWeather = () => {
   return (
     <div css={KioskHomeWeatherStyle}>
       <div css={KioskHomeWeatherImg}>
-        <img css={weatherImg} src={imgsrc} alt="weatherImage" />
+        <img css={weatherImg} src={cloudy} alt="cloudy" />
       </div>
       <div css={KioskHomeWeatherTextBox}>
-        <p className='celsius'>현재 기온 {Math.round(celsius).toFixed(1)}<span>⁰</span></p>
-        <p className='windspeed'>풍속 : {windspeed}(m/s)</p>
+        <p className="celsius">
+          현재 기온 {Math.round(celsius).toFixed(1)}
+          <span>⁰</span>
+        </p>
+        <p className="windspeed">풍속 : {windspeed}(m/s)</p>
       </div>
     </div>
   );

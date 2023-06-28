@@ -4,16 +4,16 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 ///////////////////////////////// 모달 //////////////////////////////////////
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
 ///////////////////////////////// 모달 //////////////////////////////////////
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -29,21 +29,21 @@ const videoSize = css`
   transform: translate(-50%, -50%);
 
   transform: rotateY(180deg);
-  -webkit-transform:rotateY(180deg);
-  -moz-transform:rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
 `;
 
 const canvasDiv = css`
   width: 730px !important;
   max-width: 1200px;
-  
+
   position: fixed;
   top: 10vh;
-  
+
   transform: rotateY(180deg);
-  -webkit-transform:rotateY(180deg);
-  -moz-transform:rotateY(180deg);
-  `
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+`;
 
 const canvasSize = css`
   width: 100vw;
@@ -66,14 +66,14 @@ const countDownDivStyle = ({ isActive }) => css`
   justify-content: center;
   align-items: center;
 
-  background-color: ${isActive ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0.00)'};
+  background-color: ${isActive ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.00)"};
   transition-property: background-color;
   transition-timing-function: ease-out;
   transition-duration: 1s;
-`
+`;
 
 // 글씨 애니메이션
-// grow && fadeOut 
+// grow && fadeOut
 
 const fadeIn = keyframes`
   from {
@@ -104,21 +104,21 @@ const grow = keyframes`
 `;
 
 const countDownStyle = ({ isActive }) => css`
-  display: ${isActive ? 'block !important' : 'none !important'};
+  display: ${isActive ? "block !important" : "none !important"};
   position: absolute;
   top: 52vh;
   font-size: 15vw;
-  color: ${isActive ? 'white !important' : 'black !important'};
+  color: ${isActive ? "white !important" : "black !important"};
   animation: ${fadeIn} 1s ease forwards, ${grow} 1s ease forwards;
   animation-iteration-count: infinite;
-  animation-play-state: ${isActive ? 'running' : 'paused'};
+  animation-play-state: ${isActive ? "running" : "paused"};
 
   z-index: 999 !important;
 
   transform: rotateY(180deg);
-  -webkit-transform:rotateY(180deg);
-  -moz-transform:rotateY(180deg);
-`
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+`;
 
 const buttonCenter = css`
   width: 100vw;
@@ -126,7 +126,7 @@ const buttonCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const buttonDiv = css`
   width: 80vw;
@@ -136,28 +136,28 @@ const buttonDiv = css`
   justify-content: space-between;
   align-items: center;
 
-  position : fixed;
+  position: fixed;
   top: 68vh;
 
   button {
     width: 30vw;
     height: 15vh;
 
-    background-color: #B1B2FF;
+    background-color: #b1b2ff;
     font-size: 2.5em;
     padding-top: 0.3em;
-    
+
     border-radius: 20px;
     border: 1px solid transparent;
   }
-  `;
+`;
 
 const TakeAPictureBtn = css`
   position: absolute;
-  
+
   left: 50%;
   transform: translate(-50%, 0%);
-`
+`;
 
 const SpinnerDiv = css`
   width: 100vw;
@@ -167,10 +167,10 @@ const SpinnerDiv = css`
   justify-content: center;
   align-items: center;
 
-  width:'40vw';
-  height:'20vh';
-  background-color:'white';
-`
+  width: "40vw";
+  height: "20vh";
+  background-color: "white";
+`;
 
 const KioskTakeAPicture = (data) => {
   const [iscapture, setIscapture] = useState(false);
@@ -183,7 +183,7 @@ const KioskTakeAPicture = (data) => {
   let videoRef = useRef(null);
   let photoRef = useRef(null);
 
-  const qrdata = data.data.data.qrdata
+  const qrdata = data.data.data.qrdata;
 
   // get access to user webcamera
   const getVideo = () => {
@@ -238,16 +238,16 @@ const KioskTakeAPicture = (data) => {
     setLoading(true);
 
     axios({
-      method: 'POST',
-      url: 'https://bp.ssaverytime.kr:8080/api/brolly/return',
+      method: "POST",
+      url: "http://127.0.0.1:8080/api/brolly/return",
       data: {
-        'brollyName': qrdata,
-        'caseId': id,
-        'imgData': imgURL
-      }
+        brollyName: qrdata,
+        caseId: id,
+        imgData: imgURL,
+      },
     })
       .then((res) => {
-        console.log(res.data.success)
+        console.log(res.data.success);
         if (!res.data.success) {
           clearImage();
           setOpen(true);
@@ -289,17 +289,20 @@ const KioskTakeAPicture = (data) => {
         return () => clearInterval(id);
       }
     }, [delay]);
-  }
+  };
 
-  useInterval(() => {
-    if (timeLeft <= 1) {
-      takePicture();
-      setTimeLeft("")
-      setIsActive(false);
-      return;
-    }
-    setTimeLeft((timeLeft) => timeLeft - 1);
-  }, isActive ? 1000 : null);
+  useInterval(
+    () => {
+      if (timeLeft <= 1) {
+        takePicture();
+        setTimeLeft("");
+        setIsActive(false);
+        return;
+      }
+      setTimeLeft((timeLeft) => timeLeft - 1);
+    },
+    isActive ? 1000 : null
+  );
 
   return (
     <div>
@@ -308,49 +311,75 @@ const KioskTakeAPicture = (data) => {
         <div css={countDownDivStyle({ isActive })}>
           <p css={countDownStyle({ isActive })}>{timeLeft}</p>
         </div>
-        <canvas
-          id="$canvas"
-          css={canvasSize}
-          ref={photoRef}
-        ></canvas>
+        <canvas id="$canvas" css={canvasSize} ref={photoRef}></canvas>
       </div>
       <div css={buttonCenter}>
         <div css={buttonDiv}>
-          {iscapture ? null :
-            (isActive ? null : <button onClick={takePicture} css={TakeAPictureBtn}>
+          {iscapture ? null : isActive ? null : (
+            <button onClick={takePicture} css={TakeAPictureBtn}>
               촬영하기
-            </button>)
-          }
-          {iscapture ? <button onClick={clearImage}>
-            재촬영
-          </button> : null}
-          {iscapture ? <button onClick={saveImage}>
-            확인
-          </button> : null}
+            </button>
+          )}
+          {iscapture ? <button onClick={clearImage}>재촬영</button> : null}
+          {iscapture ? <button onClick={saveImage}>확인</button> : null}
         </div>
       </div>
       <div css={SpinnerDiv}>
-        {loading ? <Stack sx={{ zIndex: '990', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '102vw', height: '102vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} spacing={5} direction="row">
-          <CircularProgress sx={{ color: 'white' }} />
-        </Stack> : null}
+        {loading ? (
+          <Stack
+            sx={{
+              zIndex: "990",
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              width: "102vw",
+              height: "102vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            spacing={5}
+            direction="row"
+          >
+            <CircularProgress sx={{ color: "white" }} />
+          </Stack>
+        ) : null}
       </div>
       <div>
         <Dialog
-          sx={{ width: '100vw' }}
+          sx={{ width: "100vw" }}
           open={open}
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle sx={{backgroundColor: '#EEF1FF', fontFamily: 'GangwonEduPowerExtraBoldA'}} fontSize={32} fontWeight={900}>{"우산이 인식되지 않았습니다."}</DialogTitle>
-          <DialogContent sx={{backgroundColor: '#EEF1FF'}}>
-            <DialogContentText sx={{fontFamily: 'GangwonEduPowerExtraBoldA'}} fontSize={20} fontWeight={700} id="alert-dialog-slide-description">
-              우산을 꼭 펼쳐서 촬영해주세요. 우산이 인식되지 않으면 반납 처리가 되지않습니다.
+          <DialogTitle
+            sx={{
+              backgroundColor: "#EEF1FF",
+              fontFamily: "GangwonEduPowerExtraBoldA",
+            }}
+            fontSize={32}
+            fontWeight={900}
+          >
+            {"우산이 인식되지 않았습니다."}
+          </DialogTitle>
+          <DialogContent sx={{ backgroundColor: "#EEF1FF" }}>
+            <DialogContentText
+              sx={{ fontFamily: "GangwonEduPowerExtraBoldA" }}
+              fontSize={20}
+              fontWeight={700}
+              id="alert-dialog-slide-description"
+            >
+              우산을 꼭 펼쳐서 촬영해주세요. 우산이 인식되지 않으면 반납 처리가
+              되지않습니다.
             </DialogContentText>
           </DialogContent>
-          <DialogActions sx={{backgroundColor: '#EEF1FF'}}>
-            <Button sx={{fontFamily: 'GangwonEduPowerExtraBoldA'}} onClick={handleClose}>닫기</Button>
+          <DialogActions sx={{ backgroundColor: "#EEF1FF" }}>
+            <Button
+              sx={{ fontFamily: "GangwonEduPowerExtraBoldA" }}
+              onClick={handleClose}
+            >
+              닫기
+            </Button>
           </DialogActions>
         </Dialog>
       </div>

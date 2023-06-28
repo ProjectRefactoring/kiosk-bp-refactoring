@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css, keyframes } from '@emotion/react'
-import KioskHeader from '../components/KioskHeader'
-import KioskHomeSection from '../components/KioskHomeSection'
+import { css, keyframes } from "@emotion/react";
+import KioskHeader from "../components/KioskHeader";
+import KioskHomeSection from "../components/KioskHomeSection";
 
 const fadeIn = keyframes`
   from {
@@ -14,17 +14,19 @@ const fadeIn = keyframes`
 
 const KioskHomeContainerStyle = css`
   box-sizing: border-box;
-  width : 100vw;
-  height : 100vh;
-  background-color: #EEF1FF;  
-`
+  width: 100vw;
+  height: 100vh;
+  background-color: #eef1ff;
+`;
 // 위에는 Emotion.js 입니다.
 // 밑에는 JS 입니다
 const KioskHomeContainer = () => {
   return (
-    <div css={css`
-      animation: ${fadeIn} 1s ease-in-out;
-    `}>
+    <div
+      css={css`
+        animation: ${fadeIn} 1s ease-in-out;
+      `}
+    >
       <div css={KioskHomeContainerStyle}>
         <div>
           <header>
@@ -36,9 +38,7 @@ const KioskHomeContainer = () => {
         </div>
       </div>
     </div>
-  )
-}
-
-
+  );
+};
 
 export default KioskHomeContainer;

@@ -25,7 +25,7 @@
     "webrtc-adapter": "^8.2.0"
   },
   "scripts": {
-    "start": "set PORT=85 && react-scripts start",
+    "start": "set PORT=80 && react-scripts start",
     "build": "react-scripts build && shx cp build/index.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
